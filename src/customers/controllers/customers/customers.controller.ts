@@ -20,13 +20,13 @@ import { CustomersService } from 'src/customers/services/customers/customers.ser
 export class CustomersController {
   constructor(private customerService: CustomersService) {}
 
-  @Get(':userId')
+  @Get(':customerId')
   getCustomer(
-    @Param('userId', ParseIntPipe) userId: number,
+    @Param('customerId', ParseIntPipe) customerId: number,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    const customer = this.customerService.findCustomerById(userId);
+    const customer = this.customerService.findCustomerById(customerId);
     if (customer) {
       return res.send(customer);
     } else {
@@ -36,9 +36,9 @@ export class CustomersController {
     }
   }
 
-  @Get('/search/:userId')
-  searchCustomer(@Param('userId', ParseIntPipe) userId: number) {
-    const customer = this.customerService.findCustomerById(userId);
+  @Get('/search/:customerId')
+  searchCustomer(@Param('customerId', ParseIntPipe) customerId: number) {
+    const customer = this.customerService.findCustomerById(customerId);
     if (customer) {
       return customer;
     } else {
