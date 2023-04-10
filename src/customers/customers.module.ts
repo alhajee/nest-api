@@ -17,7 +17,7 @@ export class CustomersModule implements NestModule {
     consumer
       .apply(ValidateCustomerMiddleware)
       .exclude({
-        path: 'customers/search/:customerId',
+        path: 'customers/',
         method: RequestMethod.GET,
       })
       .forRoutes(CustomersController);
