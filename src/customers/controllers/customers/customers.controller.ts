@@ -2,8 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
-  HttpStatus,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -30,9 +29,7 @@ export class CustomersController {
     if (customer) {
       return res.send(customer);
     } else {
-      return res.status(400).send({
-        msg: 'Customer not found!',
-      });
+      throw new NotFoundException('Customer Not Found');
     }
   }
 
@@ -42,7 +39,7 @@ export class CustomersController {
     if (customer) {
       return customer;
     } else {
-      throw new HttpException('Customer not found!', HttpStatus.BAD_REQUEST);
+      throw new NotFoundException('Customer Not Found');
     }
   }
 

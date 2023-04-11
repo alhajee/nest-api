@@ -2,12 +2,11 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
-  HttpException,
-  HttpStatus,
   Inject,
   Param,
   UseInterceptors,
 } from '@nestjs/common';
+import { UserNotFoundException } from 'src/users/exceptions/UserNotFound.exception';
 import { UsersService } from 'src/users/services/users/users.service';
 import { SerializedUser } from 'src/users/types';
 
@@ -30,7 +29,7 @@ export class UsersController {
     if (user) {
       return new SerializedUser(user);
     } else {
-      throw new HttpException('User not found!', HttpStatus.BAD_REQUEST);
+      throw new UserNotFoundException();
     }
   }
 }
