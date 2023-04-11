@@ -6,11 +6,10 @@ services:
     image: postgres:latest
     restart: always
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
       - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - docker.env
     ports:
       - "5432:5432"
     networks:
@@ -18,11 +17,14 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@email.com
-      - PGADMIN_DEFAULT_PASSWORD=postgres
+    links:
+      - postgres:postgres
+    env_file:
+      - docker.env
     ports:
-      - "16543:80"
+      - "8080:80"
+    volumes:
+      - ./data/pgadmin:/root/.pgadmin
     depends_on:
       - postgres
     networks:
