@@ -1,0 +1,3 @@
+CREATE DATABASE nestdb;
+CREATE USER postgres;
+GRANT ALL PRIVILEGES ON DATABASE nestdb TO postgres;
