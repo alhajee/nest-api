@@ -1,32 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { SerializedUser, User } from 'src/users/types';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
+import {
+  CreateUserParams,
+  FindOneParams,
+  SerializedUser,
+} from 'src/users/types';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [
-    {
-      username: 'ali',
-      password: 'ali123',
-    },
-    {
-      username: 'grace',
-      password: 'grace123',
-    },
-    {
-      username: 'ola',
-      password: 'ola123',
-    },
-    {
-      username: 'usman',
-      password: 'usman123',
-    },
-  ];
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+  ) {}
 
-  getUsers() {
-    return this.users.map((user) => new SerializedUser(user));
+  findUsers() {
+    return this.userRepository.find();
+    //return this.users.map((user) => new Ser ializedUser(user));
   }
 
-  getUserByUsername(username: string) {
-    return this.users.find((user) => user.username === username);
+  findUser(param: FindOneParams) {
+    return this.userRepository.findOne({
+      where: param,
+    });
+  }
+
+  createUser(userDetails: CreateUserParams) {
+    const newUser = this.userRepository.create({ ...userDetails });
+    return this.userRepository.save(newUser);
+  }
+
+  async findUserByUsername(username: string) {
+    return await this.userRepository.find({
+      where: {
+        username,
+      },
+    });
+    //return this.users.find ((user) => user.username === username);
   }
 }
