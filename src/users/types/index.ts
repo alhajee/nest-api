@@ -1,9 +1,5 @@
 import { Exclude } from 'class-transformer';
-
-export interface User {
-  username: string;
-  password: string;
-}
+import { IsNumberString, IsUUID } from 'class-validator';
 
 export class SerializedUser {
   username: string;
@@ -15,3 +11,13 @@ export class SerializedUser {
     Object.assign(this, partial);
   }
 }
+
+export class FindOneParams {
+  @IsUUID()
+  id: string;
+}
+
+export type CreateUserParams = {
+  username: string;
+  password: string;
+};
