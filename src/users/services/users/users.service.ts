@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import {
   CreateUserParams,
-  FindOneParams,
   SerializedUser,
+  UpdateUserParams,
 } from 'src/users/types';
 import { Repository } from 'typeorm';
 
@@ -19,9 +19,11 @@ export class UsersService {
     //return this.users.map((user) => new Ser ializedUser(user));
   }
 
-  findUser(param: FindOneParams) {
+  findUser(id: string) {
     return this.userRepository.findOne({
-      where: param,
+      where: {
+        id,
+      },
     });
   }
 
@@ -30,12 +32,16 @@ export class UsersService {
     return this.userRepository.save(newUser);
   }
 
-  async findUserByUsername(username: string) {
-    return await this.userRepository.find({
+  findUserByUsername(username: string) {
+    return this.userRepository.find({
       where: {
         username,
       },
     });
     //return this.users.find ((user) => user.username === username);
+  }
+
+  updateUser(id: string, updateUserDetails: UpdateUserParams) {
+    return this.userRepository.update({ id }, { ...updateUserDetails });
   }
 }
