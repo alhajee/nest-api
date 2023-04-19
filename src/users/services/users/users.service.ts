@@ -44,4 +44,10 @@ export class UsersService {
   updateUser(id: string, updateUserDetails: UpdateUserParams) {
     return this.userRepository.update({ id }, { ...updateUserDetails });
   }
+
+  deleteUser(id: string) {
+    return this.userRepository.delete({
+      id,
+    });
+  }
 }
