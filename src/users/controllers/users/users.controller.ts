@@ -6,8 +6,8 @@ import {
   Inject,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
-  Put,
   UseFilters,
   UseInterceptors,
   ValidationPipe,
@@ -58,11 +58,11 @@ export class UsersController {
     }
   }
 
-  @Put(':id')
-  updateUserById(
+  @Patch(':id')
+  async updateUserById(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.userService.updateUser(id, updateUserDto);
+    await this.userService.updateUser(id, updateUserDto);
   }
 }
