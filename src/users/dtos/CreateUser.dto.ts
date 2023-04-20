@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { CreateUserProfileDto } from './CreateUserProfileDto';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -12,4 +13,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   confirmPassword: string;
+
+  @IsOptional()
+  profile: CreateUserProfileDto;
 }
