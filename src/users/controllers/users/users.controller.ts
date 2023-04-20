@@ -11,10 +11,9 @@ import {
   Post,
   UseFilters,
   UseInterceptors,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
-import { CreateUserProfileDto } from 'src/users/dtos/CreateUserProfileDto';
+import { CreateUserProfileDto } from 'src/users/dtos/CreateUserProfile.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { UserNotFoundException } from 'src/users/exceptions/UserNotFound.exception';
 import { HttpExceptionFilter } from 'src/users/filters/HttpException.filter';

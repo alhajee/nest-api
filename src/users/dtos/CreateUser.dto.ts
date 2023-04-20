@@ -1,5 +1,11 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { CreateUserProfileDto } from './CreateUserProfileDto';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { CreateUserProfileDto } from './CreateUserProfile.dto';
+import { Type } from 'class-transformer';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -14,6 +20,8 @@ export class CreateUserDto {
   @IsString()
   confirmPassword: string;
 
+  @ValidateNested()
+  @Type(() => CreateUserProfileDto)
   @IsOptional()
   profile: CreateUserProfileDto;
 }
