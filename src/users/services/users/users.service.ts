@@ -19,7 +19,11 @@ export class UsersService {
   ) {}
 
   findUsers() {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      relations: {
+        profile: true,
+      },
+    });
     //return this.users.map((user) => new Ser ializedUser(user));
   }
 
@@ -27,6 +31,9 @@ export class UsersService {
     return this.userRepository.findOne({
       where: {
         id,
+      },
+      relations: {
+        profile: true,
       },
     });
   }
