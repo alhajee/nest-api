@@ -23,7 +23,10 @@ export class User {
   @Column({ nullable: true })
   authStrategy: string;
 
-  @OneToOne(() => Profile)
+  @OneToOne(() => Profile, {
+    cascade: ['insert', 'update'],
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   profile: Profile;
 
