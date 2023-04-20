@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Profile } from 'src/users/entities/profile.entity';
 import { User } from 'src/users/entities/user.entity';
+import { UserNotFoundException } from 'src/users/exceptions/UserNotFound.exception';
 import {
   CreateUserParams,
+  CreateUserProfileParams,
   SerializedUser,
   UpdateUserParams,
 } from 'src/users/types';
@@ -12,6 +15,7 @@ import { Repository } from 'typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Profile) private profileRepository: Repository<Profile>,
   ) {}
 
   findUsers() {
@@ -49,5 +53,20 @@ export class UsersService {
     return this.userRepository.delete({
       id,
     });
+  }
+
+  async createUserProfile(
+    id: string,
+    userProfileDetails: CreateUserProfileParams,
+  ) {
+    const user = await this.userRepository.findOneBy({
+      id,
+    });
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+    const newProfile = this.profileRepository.create(userProfileDetails);
+    user.profile = newProfile;
+    return this.userRepository.save(user);
   }
 }
