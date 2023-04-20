@@ -62,9 +62,15 @@ export class UsersService {
     const user = await this.userRepository.findOneBy({
       id,
     });
+
     if (!user) {
       throw new UserNotFoundException();
     }
+
+    if (user.profile) {
+      this.profileRepository.delete(user.profile);
+    }
+
     const newProfile = this.profileRepository.create(userProfileDetails);
     user.profile = newProfile;
     return this.userRepository.save(user);
