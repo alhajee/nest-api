@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Profile } from './profile.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -16,6 +19,13 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  authStrategy: string;
+
+  @OneToOne(() => Profile)
+  @JoinColumn()
+  profile: Profile;
 
   @CreateDateColumn({
     type: 'timestamp',
