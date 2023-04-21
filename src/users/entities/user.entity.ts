@@ -24,8 +24,7 @@ export class User {
   authStrategy: string;
 
   @OneToOne(() => Profile, {
-    cascade: ['insert', 'update'],
-    onDelete: 'CASCADE',
+    cascade: true,
   })
   @JoinColumn()
   profile: Profile;

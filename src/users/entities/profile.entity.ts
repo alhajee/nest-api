@@ -2,14 +2,23 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity({ name: 'user_profiles' })
 export class Profile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @OneToOne(() => User, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  user: User;
 
   @Column()
   firstName: string;
